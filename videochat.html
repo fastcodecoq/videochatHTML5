@@ -9,8 +9,8 @@
 	<script src="http://dannegm.com:4356/socket.io/socket.io.js"></script>
 </head>
 <body>
-<video id="me" autoplay></video>
-<video id="he" autoplay></video>
+<video id="me" autoplay controls></video>
+<video id="he" autoplay controls></video>
 <div id="res"></div>
 <script type="text/javascript">
 	/*
@@ -24,9 +24,7 @@
 	window.URL = window.URL || window.webkitURL;
 	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
 
-	var run = function(callback){
-			window.onload = callback;
-		},
+	var run = function(callback){ window.onload = callback; },
 		$ = function(elem){ return document.getElementById(elem); },
 		cObjUrl = window.URL.createObjectURL;
 
@@ -42,9 +40,7 @@
 		cliente.on('postCam', function(stream){
 			console.log('Objeto recivido: ' + stream);
 			console.log(stream);
-			$('he').pause();
 			$('he').src = cObjUrl(stream);
-			$('he').play();
 		});
 	}
 	function init (){
