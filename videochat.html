@@ -1,0 +1,67 @@
+<!doctype html>
+<!-- [ Power By Dannegm (c) 2012 - http://dannegm.com ] -->
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Prueba de video</title>
+	<script src="http://code.jquery.com/jquery.min.js"></script>
+	<script src="http://dannegm.com:4356/socket.io/socket.io.js"></script>
+</head>
+<body>
+<button>Conectar</stream>
+<input id="yo" />
+<video id="me" autoplay></video>
+<input id="el" />
+<video id="he" autoplay></video>
+<div id="res"></div>
+<script type="text/javascript">
+	/*
+	var cliente = new io.Socket('dannegm.com',{ port: 4356 });
+	cliente.connect();	/**/
+	
+	var cliente = io.connect("http://dannegm.com:4356"); /**/
+
+	// Referencia al servidor: ./camara.js
+
+	window.URL = window.URL || window.webkitURL;
+	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+
+	var cObjUrl = window.URL.createObjectURL;
+	var yo = {id,user,stream};
+
+	function setCam (){
+		navigator.getUserMedia({audio: true, video: true}, function(stream) {
+			$('#me').attr('src', cObjUrl(stream) );
+			yo.id = stream.label;
+			yo.stream = stream;
+			$('#yo').val(yo.id);
+		});
+	}
+	function postCam (){
+		yo.user = $('#el').val();
+		console.log('Objeto enviado: ' + yo);
+		console.log(yo);
+		cliente.emit('getCam', yo);
+	}
+	function getCam (){
+		cliente.on('postCam', function(user){
+			console.log('Objeto recivido: ' + user);
+			console.log(user);
+			$('#he').attr('src', cObjUrl(user.stream) );
+			$('#he').play();
+		});
+	}
+	function init (){
+		setCam();
+		$('button').click(function(e){
+			e.preventDefault();
+			postCam();
+			getCam();
+		});
+	}
+	$(init);
+</script>
+</body>
+</html>
